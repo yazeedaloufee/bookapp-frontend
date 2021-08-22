@@ -50,9 +50,9 @@ A friendly warning first to positively encourage people to contribute to the pro
 Maybe start with two different task. And meet in the middle. For example one can work on the front end and one on the back end.
 
 
-# Project Name
+# Project Name   books
 
-**Author**: Team Member Names Goes Here
+**Author**: yazeed aloufee, abdelrahman abu atta
 **Version**: 1.0.0 (increment the patch/fix version number if you make more commits past your first submission)
 
 ## Overview
@@ -72,12 +72,12 @@ Maybe start with two different task. And meet in the middle. For example one can
 ## Credit and Collaborations
 <!-- Give credit (and a link) to other people or resources that helped you build this application. -->
 
-Name of feature: ________________________________
+Name of feature: app now use auth0
 
-Estimate of time needed to complete: _____
+Estimate of time needed to complete: 2
 
-Start time: _____
+Start time: 3
 
-Finish time: _____
+Finish time: 5
 
-Actual time needed to complete: _____
+Actual time needed to complete: 2
