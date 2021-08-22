@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from './Header';
-import IsLoadingAndError from './IsLoadingAndError';
+// import IsLoadingAndError from './IsLoadingAndError';
 import Footer from './Footer';
 import {
   BrowserRouter as Router,
@@ -15,7 +15,7 @@ import Profile from './Profile'
 class App extends React.Component {
 
   render() {
-    const { user, isAuthenticated } = this.props.auth0;
+    const {  isAuthenticated } = this.props.auth0;
     console.log('app', this.props);
     return (
       <>
