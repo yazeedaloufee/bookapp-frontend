@@ -13,8 +13,24 @@ import Login from './Login';
 import Profile from './Profile'
 
 class App extends React.Component {
+  constructor(props){
+    super(props);
+    this.state={
+      bookstate:[]
+    }
 
+    
+  }
+   bookDataInApp=(value)=>{
+    this.setState({
+      bookstate:value
+    })
+    console.log('inside app function',this.state.bookstate);
+  }
+  
   render() {
+    console.log('portttttttttttt',process.env.REACT_APP_PORT);
+    
     const {  isAuthenticated } = this.props.auth0;
     console.log('app', this.props);
     return (
@@ -25,7 +41,7 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/">
               {/* TODO: if the user is logged in, render the `BestBooks` component, if they are not, render the `Login` component */}
-              {isAuthenticated === true ? <BestBooks /> : <Login />}
+              {isAuthenticated === true ? <BestBooks bookstate={this.bookDataInApp} booksdata={this.state.bookstate}/> : <Login />}
             </Route>
             {/* TODO: add a route with a path of '/profile' that renders a `Profile` component */}
             <Route exact path="/profile">
