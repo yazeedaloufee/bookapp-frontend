@@ -6,6 +6,7 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
+import { withAuth0 } from '@auth0/auth0-react';
 
 
 class MyFavoriteBooks extends React.Component {
@@ -13,11 +14,12 @@ class MyFavoriteBooks extends React.Component {
     console.log('did mount function is working');
     // console.log(this.props.bookstate);
     this.props.bookstate(['12342134']);
+    const { user} = this.props.auth0;
 
     // console.log(this.props.bookstate);
-    console.log(`${process.env.REACT_APP_PORT}/books`);
+    console.log(`${process.env.REACT_APP_PORT}/books?${user.email}`);
 
-    axios.get(`${process.env.REACT_APP_PORT}/books`).then(result => {
+    axios.get(`${process.env.REACT_APP_PORT}/books?email=${user.email}`).then(result => {
       //  this.props.bookstate=result.data;
       // console.log(result.data);
       this.props.bookstate(result.data);
@@ -76,4 +78,4 @@ class MyFavoriteBooks extends React.Component {
   }
 }
 
-export default MyFavoriteBooks;
+export default withAuth0(MyFavoriteBooks) ;
