@@ -7,11 +7,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import { withAuth0 } from '@auth0/auth0-react';
+import Button from 'react-bootstrap/Button';
 
 
 class MyFavoriteBooks extends React.Component {
   componentDidMount() {
-    console.log('did mount function is working');
+    // console.log('did mount function is working');
     // console.log(this.props.bookstate);
     this.props.bookstate(['12342134']);
     const { user} = this.props.auth0;
@@ -37,6 +38,17 @@ class MyFavoriteBooks extends React.Component {
 
   }
 
+  deleteBook=(e)=>{
+ 
+
+    let _id=e.target.id;      
+    console.log('idididididididd',_id);
+    axios.delete(`${process.env.REACT_APP_PORT}/books/${_id}?email=${this.props.email}`).then(result=>{
+      this.props.bookstate(result.data);
+    })
+
+  }
+
   render() {
     return (
       <Row  >
@@ -53,6 +65,7 @@ class MyFavoriteBooks extends React.Component {
                   <Card.Subtitle className="mb-2 text-muted">{value.email}</Card.Subtitle>
                   <Card.Text>{value.description}
                   </Card.Text>
+                  <Button variant="primary" id={value._id} onClick={this.deleteBook} name='BookButton'>delete book</Button>
 
                 </Card.Body>
               </Card>
