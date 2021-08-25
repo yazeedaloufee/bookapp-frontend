@@ -11,12 +11,15 @@ import { withAuth0 } from '@auth0/auth0-react';
 import BestBooks from './BestBooks';
 import Login from './Login';
 import Profile from './Profile'
+import Button from 'react-bootstrap/Button';
+import BookModal from './component/BookModal';
 
 class App extends React.Component {
   constructor(props){
     super(props);
     this.state={
-      bookstate:[]
+      bookstate:[],
+      modalShow:false
     }
 
     
@@ -27,12 +30,30 @@ class App extends React.Component {
     })
     console.log('inside app function',this.state.bookstate);
   }
-  
+
+   modalShowHandler=async ()=>{
+    await this.setState({
+      modalShow:true
+    })
+    // console.log('modal show value',this.state.modalShow);
+  }
+
+  modalCloseHandler=async ()=>{
+    await this.setState({
+      modalShow:false
+    })
+    // console.log('modal show value',this.state.modalShow);
+  }
+
+
+
+
+
   render() {
-    console.log('portttttttttttt',process.env.REACT_APP_PORT);
+   
     
-    const {  isAuthenticated } = this.props.auth0;
-    console.log('app', this.props);
+    const { user, isAuthenticated } = this.props.auth0;
+    
     return (
       <>
         <Router>
@@ -40,8 +61,20 @@ class App extends React.Component {
           <Header />
           <Switch>
             <Route exact path="/">
+        
+
+
+              
+                
+
+
+
               {/* TODO: if the user is logged in, render the `BestBooks` component, if they are not, render the `Login` component */}
-              {isAuthenticated === true ? <BestBooks bookstate={this.bookDataInApp} booksdata={this.state.bookstate}/> : <Login />}
+              {isAuthenticated === true ? <BestBooks bookstate={this.bookDataInApp} booksdata={this.state.bookstate} email={user.email}/> : <Login />}
+              <BookModal   modalCloseHandler={this.modalCloseHandler}  show={this.state.modalShow} bookstate={this.bookDataInApp}/>
+           { isAuthenticated && <Button onClick={this.modalShowHandler} >Add a Book</Button>}
+              
+              
             </Route>
             {/* TODO: add a route with a path of '/profile' that renders a `Profile` component */}
             <Route exact path="/profile">
