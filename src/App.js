@@ -13,6 +13,7 @@ import Login from './Login';
 import Profile from './Profile'
 import Button from 'react-bootstrap/Button';
 import BookModal from './component/BookModal';
+import axios from 'axios'
 
 class App extends React.Component {
   constructor(props){
@@ -24,6 +25,21 @@ class App extends React.Component {
 
     
   }
+   componentDidMount() {
+
+    this.setState({
+         bookstate:this.state.bookstate
+       })
+    
+    // console.log(`${process.env.REACT_APP_PORT}/books?${user.email}`);
+    //  axios.get(`${process.env.REACT_APP_PORT}/books?email=${user.email}`).then(result => {
+    //  this.setState({
+    //    bookstate:result
+    //  })
+    // })
+  }
+
+
    bookDataInApp=(value)=>{
     this.setState({
       bookstate:value
