@@ -7,9 +7,11 @@ import { withAuth0 } from '@auth0/auth0-react';
 class BookModal extends React.Component {
 
 
+   
+
     addBook = (e) => {
         e.preventDefault();
-        this.props.modalCloseHandler();
+        // this.props.modalCloseHandler();
         const { user } = this.props.auth0;
         let bookInfo = {
             bookName: e.target.bookName.value,
@@ -22,6 +24,7 @@ class BookModal extends React.Component {
 
 
     }
+
 
 
     render() {
@@ -51,9 +54,10 @@ class BookModal extends React.Component {
                             <Form.Label>Description</Form.Label>
                             <Form.Control type="text" placeholder="description" name='description' />
                         </Form.Group>
-                        <Button variant="primary" type="submit">
+                        <Button variant="primary" type="submit" onClick={this.props.modalCloseHandler}>
                             Submit
                         </Button>
+                       
                     </Form>
 
 

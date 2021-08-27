@@ -8,54 +8,76 @@ import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import { withAuth0 } from '@auth0/auth0-react';
 import Button from 'react-bootstrap/Button';
+import UpdateModel from './component/UpdateModel';
 
 
 class MyFavoriteBooks extends React.Component {
+  constructor(props){
+    super(props);
+    this.state={
+      updateModelShow:false,
+      selectedBookId:0,
+      selectedBook:{}
+    }
+  }
+upModShowHandler=()=>{
+  this.setState({
+    updateModelShow:true
+  })
+}
+upModHideHandler=()=>{
+  this.setState({
+    updateModelShow:false
+  })
+}
+
+
   componentDidMount() {
-    // console.log('did mount function is working');
-    // console.log(this.props.bookstate);
+
     this.props.bookstate(['12342134']);
     const { user} = this.props.auth0;
-
-    // console.log(this.props.bookstate);
     console.log(`${process.env.REACT_APP_PORT}/books?${user.email}`);
-
     axios.get(`${process.env.REACT_APP_PORT}/books?email=${user.email}`).then(result => {
-      //  this.props.bookstate=result.data;
-      // console.log(result.data);
       this.props.bookstate(result.data);
-      // console.log(this.props.bookstate);
-      // console.log(process.env.APP_PORT);
     })
-
-    //   // console.log(`${process.env.PORT}/books`);
-
-
-    //   // let booksData=await axios.get(`${process.env.PORT}/books`);
-    //   // console.log(booksData.data);
-    //   // this.props.bookstate=booksData.data;
-    //   // console.log(this.props.bookstate);
-
   }
 
   deleteBook=(e)=>{
  
-
     let _id=e.target.id;      
-    console.log('idididididididd',_id);
     axios.delete(`${process.env.REACT_APP_PORT}/books/${_id}?email=${this.props.email}`).then(result=>{
       this.props.bookstate(result.data);
     })
+  }
+  
+  updateBook=async(e)=>{
+    await this.setState({
+      selectedBookId:e.target.id
+    })
+    await this.setState({
+      selectedBook:this.props.booksdata.find((value)=>{
+          console.log('value._id insede bestbooks js',value._id);
+          // console.log('this.props.id',this.props.id)
+         return value._id===this.state.selectedBookId;
+     })    
+     })
+     console.log('inside best books. selected book',this.state.selectedBook)
+
+
+
+    this.upModShowHandler();
+
 
   }
 
   render() {
     return (
+
       <Row  >
+        <UpdateModel upModHideHandler={this.upModHideHandler} show={this.state.updateModelShow} data={this.props.booksdata} id={this.state.selectedBookId} bookstate={this.props.bookstate} selectedBook={this.state.selectedBook} />
         {this.props.booksdata &&
 
           this.props.booksdata.map(value => {
-
 
             return (
 
@@ -67,26 +89,13 @@ class MyFavoriteBooks extends React.Component {
                   </Card.Text>
                   <Button variant="primary" id={value._id} onClick={this.deleteBook} name='BookButton'>delete book</Button>
 
+                  <Button variant="primary" id={value._id} onClick={this.updateBook} name='updateBookButton'>Update</Button>
+
                 </Card.Body>
               </Card>
-
-
             );
-
-
           })
-
         }</Row>
-
-
-      // return(
-      //   <Jumbotron>
-      //     <h1>My Favorite Books</h1>
-      //     <p>
-      //       This is a collection of my favorite books
-      //     </p>
-      //   </Jumbotron>
-      // )
     )
   }
 }
